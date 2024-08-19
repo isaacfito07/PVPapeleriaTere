@@ -1,0 +1,2 @@
+ALTER TABLE PVVentaPago
+ADD idAbono INT DEFAULT 0;

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configurationSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:schemas-microsoft-com:xml-wcfconfigurationsnapshot">
+  <behaviors />
+  <bindings>
+    <binding digest="System.ServiceModel.Configuration.BasicHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;ProntipagosTopUpServiceEndPointPortBinding1&quot; /&gt;" bindingType="basicHttpBinding" name="ProntipagosTopUpServiceEndPointPortBinding1" />
+  </bindings>
+  <endpoints>
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;ProntipagosTopUpServiceEndPointPortBinding1&quot; contract=&quot;ProntiPagosWSProduccion.ProntipagosTopUpServiceEndPoint&quot; name=&quot;ProntipagosTopUpServiceEndPointPort1&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;ProntipagosTopUpServiceEndPointPortBinding1&quot; contract=&quot;ProntiPagosWSProduccion.ProntipagosTopUpServiceEndPoint&quot; name=&quot;ProntipagosTopUpServiceEndPointPort1&quot; /&gt;" contractName="ProntiPagosWSProduccion.ProntipagosTopUpServiceEndPoint" name="ProntipagosTopUpServiceEndPointPort1" />
+  </endpoints>
+</configurationSnapshot>

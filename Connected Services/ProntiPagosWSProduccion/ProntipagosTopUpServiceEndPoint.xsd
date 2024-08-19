@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://siveta.ws.com" xmlns:ns1="http://prontipagos.ws.com" targetNamespace="http://siveta.ws.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint?xsd=2" namespace="http://prontipagos.ws.com" />
+  <xs:element name="obtainCatalogProducts" type="tns:obtainCatalogProducts" />
+  <xs:element name="obtainCatalogProductsResponse" type="tns:obtainCatalogProductsResponse" />
+  <xs:complexType name="obtainCatalogProducts">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="obtainCatalogProductsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:responseCatalogProductTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

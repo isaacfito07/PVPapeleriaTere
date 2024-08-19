@@ -1,0 +1,89 @@
+# Visual Studio archivos de usuario
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos de depuración
+*.rsuser
+*.red
+
+# Archivos de interfaz de usuario de VS
+*.cache
+*.idea/
+
+# Archivos de entorno local
+.vscode/
+*.orig
+*.orig.*
+
+# Binarios de compilación
+[Bb]in/
+[Oo]bj/
+
+# Configuración del sistema
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Archivos temporales
+[Tt]emp/
+*.tmp
+
+# Paquetes NuGet
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+*.nupkg.metadata
+
+# Paquetes
+packages/
+*.vsix
+
+# Backups
+*_i.c
+*_p.c
+*_i.h
+*_p.h
+*.pidb
+*.svclog
+*.old
+*.backup
+*.bak
+
+# Archivos de registro
+*.log
+
+# Archivos de información
+TestResult.xml
+[nN][uU][gG][eE][tT]/*
+
+# Archivos de configuración generados
+project.lock.json
+project.fragment.lock.json
+
+# Archivos de cache de Visual Studio
+*.cache/
+*.vspscc
+*.vssscc
+
+# Archivos de proyecto de Visual Studio
+*.csproj.user
+*.csprojResolveAssemblyReference.cache
+*.csprojResolveAssemblyReference.cache
+*.csproj.*.user
+*.vbproj.*.user
+*.csproj.user
+*.vbproj.user
+
+# Archivos de informe
+*.vsp
+*.vspx
+*.sap
+*.scc
+
+# Otros archivos innecesarios
+*.ncrunchproject
+*.ncrunchsolution
+*.nupkg
+*.snupkg

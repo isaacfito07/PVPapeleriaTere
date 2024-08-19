@@ -1,0 +1,5 @@
+ALTER TABLE PVVentas
+ADD NombreCliente VARCHAR(300) NULL;
+
+ALTER TABLE PVVentas
+ADD Pagado BIT DEFAULT(1);

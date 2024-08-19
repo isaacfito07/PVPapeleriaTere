@@ -1,0 +1,2 @@
+ALTER TABLE PVVentaPago
+ADD idEsAbono BIT DEFAULT 0;

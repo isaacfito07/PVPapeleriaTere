@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://prontipagos.ws.com" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ProntipagosTopUpServiceEndPoint" targetNamespace="http://prontipagos.ws.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint?xsd=1" namespace="http://siveta.ws.com" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint?xsd=2" namespace="http://prontipagos.ws.com" />
+    </xsd:schema>
+  </types>
+  <message name="sellService">
+    <part name="parameters" element="tns:sellService" />
+  </message>
+  <message name="sellServiceResponse">
+    <part name="parameters" element="tns:sellServiceResponse" />
+  </message>
+  <message name="balanceService">
+    <part name="parameters" element="tns:balanceService" />
+  </message>
+  <message name="balanceServiceResponse">
+    <part name="parameters" element="tns:balanceServiceResponse" />
+  </message>
+  <message name="checkStatusService">
+    <part name="parameters" element="tns:checkStatusService" />
+  </message>
+  <message name="checkStatusServiceResponse">
+    <part name="parameters" element="tns:checkStatusServiceResponse" />
+  </message>
+  <message name="obtainCatalogProducts">
+    <part name="parameters" element="tns:obtainCatalogProducts" />
+  </message>
+  <message name="obtainCatalogProductsResponse">
+    <part name="parameters" element="tns:obtainCatalogProductsResponse" />
+  </message>
+  <portType name="ProntipagosTopUpServiceEndPoint">
+    <operation name="sellService">
+      <input wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/sellServiceRequest" message="tns:sellService" />
+      <output wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/sellServiceResponse" message="tns:sellServiceResponse" />
+    </operation>
+    <operation name="balanceService">
+      <input wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/balanceServiceRequest" message="tns:balanceService" />
+      <output wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/balanceServiceResponse" message="tns:balanceServiceResponse" />
+    </operation>
+    <operation name="checkStatusService">
+      <input wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/checkStatusServiceRequest" message="tns:checkStatusService" />
+      <output wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/checkStatusServiceResponse" message="tns:checkStatusServiceResponse" />
+    </operation>
+    <operation name="obtainCatalogProducts">
+      <input wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/obtainCatalogProductsRequest" message="tns:obtainCatalogProducts" />
+      <output wsam:Action="http://prontipagos.ws.com/ProntipagosTopUpServiceEndPoint/obtainCatalogProductsResponse" message="tns:obtainCatalogProductsResponse" />
+    </operation>
+  </portType>
+  <binding name="ProntipagosTopUpServiceEndPointPortBinding" type="tns:ProntipagosTopUpServiceEndPoint">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="sellService">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="balanceService">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="checkStatusService">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtainCatalogProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ProntipagosTopUpServiceEndPoint">
+    <port name="ProntipagosTopUpServiceEndPointPort" binding="tns:ProntipagosTopUpServiceEndPointPortBinding">
+      <soap:address location="http://ws.prontipagos.mx:80/siveta-endpoint-ws-1.0-SNAPSHOT/ProntipagosTopUpServiceEndPoint" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,121 @@
+
+SELECT * 
+INTO #PVVentaPago 
+FROM PVVentaPago
+WHERE 1 = 0
+
+INSERT INTO #PVVentaPago (FolioVenta,
+        MontoRecibido,
+        Cambio,
+        MontoEfectivo,
+        MontoTarjeta,
+        MontoTarjetaCredito,
+        MontoTransferencia,
+        MontoMonedero,
+        MontoVales,
+        MontoCredito,
+        TipoTarjeta,
+        AutorizacionTarjeta,
+        Respuesta,
+        FolioTransferencia,
+        MontoDescuento,
+        FechaAlta,
+        IdUsuarioAlta,
+        DisparadoNube,
+        FechaDisparo,
+        IdUsuarioDisparo)
+SELECT FolioVenta,
+        MontoRecibido,
+        Cambio,
+        MontoEfectivo,
+        MontoTarjeta,
+        MontoTarjetaCredito,
+        MontoTransferencia,
+        MontoMonedero,
+        MontoVales,
+        MontoCredito,
+        TipoTarjeta,
+        AutorizacionTarjeta,
+        Respuesta,
+        FolioTransferencia,
+        MontoDescuento,
+        FechaAlta,
+        IdUsuarioAlta,
+        DisparadoNube,
+        FechaDisparo,
+        IdUsuarioDisparo
+FROM PVVentaPago
+ORDER BY Id;
+
+DROP TABLE PVVentaPago
+
+CREATE TABLE [dbo].[PVVentaPago](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FolioVenta] [varchar](100) NOT NULL,
+	[MontoRecibido] [float] NOT NULL,
+	[Cambio] [float] NOT NULL,
+	[MontoEfectivo] [float] NOT NULL,
+	[MontoTarjeta] [float] NOT NULL,
+	[MontoTarjetaCredito] [float] NOT NULL,
+	[MontoTransferencia] [float] NOT NULL,
+	[MontoMonedero] [float] NOT NULL,
+	[MontoVales] [float] NOT NULL,
+	[MontoCredito] [float] NOT NULL,
+	[TipoTarjeta] [varchar](80) NULL,
+	[AutorizacionTarjeta] [varchar](200) NULL,
+	[Respuesta] [varchar](200) NULL,
+	[FolioTransferencia] [varchar](150) NULL,
+	[MontoDescuento] [float] NULL,
+    [PorcentajeDescuento] [float] NULL,
+	[FechaAlta] [datetime] NOT NULL,
+	[IdUsuarioAlta] [int] NOT NULL,
+	[DisparadoNube] [bit] NULL,
+	[FechaDisparo] [datetime] NULL,
+	[IdUsuarioDisparo] [int] NULL
+)
+
+
+INSERT INTO PVVentaPago (FolioVenta,
+        MontoRecibido,
+        Cambio,
+        MontoEfectivo,
+        MontoTarjeta,
+        MontoTarjetaCredito,
+        MontoTransferencia,
+        MontoMonedero,
+        MontoVales,
+        MontoCredito,
+        TipoTarjeta,
+        AutorizacionTarjeta,
+        Respuesta,
+        FolioTransferencia,
+        MontoDescuento,
+        PorcentajeDescuento,
+        FechaAlta,
+        IdUsuarioAlta,
+        DisparadoNube,
+        FechaDisparo,
+        IdUsuarioDisparo)
+SELECT FolioVenta,
+        MontoRecibido,
+        Cambio,
+        MontoEfectivo,
+        MontoTarjeta,
+        MontoTarjetaCredito,
+        MontoTransferencia,
+        MontoMonedero,
+        MontoVales,
+        MontoCredito,
+        TipoTarjeta,
+        AutorizacionTarjeta,
+        Respuesta,
+        FolioTransferencia,
+        MontoDescuento,
+        0, --Porcentaje descuento
+        FechaAlta,
+        IdUsuarioAlta,
+        DisparadoNube,
+        FechaDisparo,
+        IdUsuarioDisparo
+FROM #PVVentaPago
+order by Id

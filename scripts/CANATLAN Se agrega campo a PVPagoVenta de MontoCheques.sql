@@ -1,0 +1,8 @@
+ALTER TABLE PVVentaPago
+ADD MontoCheque FLOAT DEFAULT 0.00
+
+ALTER TABLE PVVentaPago
+ADD FolioCheque VARCHAR(150) NULL
+
+ALTER TABLE PVCorteCaja
+ADD [Cheques] [float] NOT NULL DEFAULT 0
