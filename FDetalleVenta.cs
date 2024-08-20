@@ -239,7 +239,8 @@ namespace PVLaJoya
 
         private bool AsignarCliente()
         {
-            FCliente fCliente = new FCliente(sqlLoc, sql, idUsuario);
+            //FCliente fCliente = new FCliente(sqlLoc, sql, idUsuario);
+            FClienteVenta fCliente = new FClienteVenta(sqlLoc, sql);
             fCliente.ShowDialog();
             
             if(fCliente.IdCliente > 0)

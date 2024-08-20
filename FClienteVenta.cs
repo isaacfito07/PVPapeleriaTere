@@ -106,7 +106,7 @@ namespace PVLaJoya
             //Cat_Clientes
             string query = " SELECT Id, Clave, Nombre, RFC, Calle, NumInterior, \n" +
                 "NumExterior, Colonia, CP, Telefono, Poblacion, Municipio, Estado, \n" +
-                "CONVERT(int, ISNULL(UsoCFDI, 0)) UsoCFDI, RegimenFiscal, \n" +
+                "UsoCFDI, RegimenFiscal, \n" +
                 "DiasCredito, LimiteCredito, FechaAlta, IdUsuarioAlta, ISNULL(TieneDescuento,0) TieneDescuento, ISNULL(PorcentajeDescuento,0) PorcentajeDescuento \n" +
                 "FROM PV_Cat_Clientes WHERE Activo = 1 ";
             DataTable dtClientes = sql.selec(query);

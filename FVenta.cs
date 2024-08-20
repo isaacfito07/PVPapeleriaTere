@@ -3539,7 +3539,30 @@ namespace PVLaJoya
                 {
                     e.Handled = true;
                 }
+                if (e.KeyCode == Keys.Back)
+                {
+                    if (gvPendientes.Rows.Count > 0)
+                    {
+                        var count = gvPendientes.SelectedRows[0].Cells[1].Value;
+                        if (count != null)
+                        {
+                            BorrarVentaPendiente(count.ToString());
+                        }
+                    }
+                }
                 Atajos(sender, e);
+            }
+        }
+
+        private void BorrarVentaPendiente(string FolioVenta)
+        {
+            DialogResult dr = MessageBox.Show("Eliminar venta con folio " + FolioVenta + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            if (dr == DialogResult.Yes)
+            {
+                string Folio = gvPendientes.Rows[gvPendientes.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                string QueryCancelarPendiente = "UPDATE PVVentas SET Cancelado = 1 WHERE FolioVenta = '" + Folio + "';";
+                int execute = sqlLoc.exec(QueryCancelarPendiente);
+                VentasPendientes();
             }
         }
 
