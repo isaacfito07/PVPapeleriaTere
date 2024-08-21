@@ -897,9 +897,8 @@ namespace PVLaJoya
                 string usuario = passFondo.Usuario;
                 string pass = passFondo.Contrasena;
 
-                string queryUsuarioAdmin = "SELECT TOP 1 Id, Usuario, Contrasena FROM PVUsuarios WHERE PuntoVenta = 1 \n" +
-                    "AND CancelarVenta = 1 AND CorteCaja = 1 AND EstadoCaja = 1 AND CorreccionesCaja = 1 \n" +
-                    "AND RetiroCaja = 1 AND Descuentos = 1 AND Devoluciones = 1 AND Arqueo = 1 AND Usuario LIKE '"+usuario+"' ORDER BY id DESC";
+                string queryUsuarioAdmin = "SELECT TOP 1 Id, Usuario, Contrasena FROM PVUsuarios WHERE \n" +
+                    "Descuentos = 1 AND Usuario LIKE '"+usuario+"' ORDER BY id DESC";
                 
                 DataTable dtUserAdmin = sqlLoc.selec(queryUsuarioAdmin);
                 string dtId = string.Empty;
@@ -911,7 +910,7 @@ namespace PVLaJoya
                     dtId = dtUserAdmin.Rows[0]["Id"].ToString();
                     dtUser = dtUserAdmin.Rows[0]["Usuario"].ToString();
                     dtPass = dtUserAdmin.Rows[0]["Contrasena"].ToString();
-                    if (usuario == dtUser && pass == dtPass)
+                    if (usuario.Equals(dtUser, StringComparison.OrdinalIgnoreCase) && pass == dtPass)
                     {
                         LoginSupervisor = true;
                     }
