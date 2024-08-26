@@ -71,12 +71,10 @@ namespace PVLaJoya
                 " VD.Cantidad 'Cantidad Original', " +
                 " (VD.Cantidad - ISNULL(D.CantidadDevuelta,0)) 'Cantidad Restante', " +
                 " (VD.Cantidad - ISNULL(D.CantidadDevuelta,0)) 'Cantidad Devolver', \n" +
-                " FORMAT(ROUND(VD.Precio, 2),'C') Precio, \n" +
-                " FORMAT(ROUND(((VD.Cantidad * VD.Precio - VD.MontoDescuento) * VD.Iva), 2),'C') IVA, \n" +
-                " FORMAT(ROUND(((VD.Cantidad * VD.Precio - VD.MontoDescuento) * VD.Ieps), 2),'C') IEPS, \n" +
-                " FORMAT(ROUND((VD.Cantidad * VD.Precio - VD.MontoDescuento) +" +
-                "  ROUND(((VD.Cantidad * VD.Precio - VD.MontoDescuento) * VD.Iva) + " +
-                "  ((VD.Cantidad * VD.Precio - VD.MontoDescuento) * VD.Ieps),2),2),'C') Total, VD.IdProducto," +
+                " FORMAT(ROUND(VD.PrecioSinImpuesto, 2),'C') Precio, \n" +
+                " FORMAT(ROUND((VD.PrecioSinImpuesto * VD.Iva),2),'C') IVA, \n" +
+                " FORMAT(ROUND((VD.PrecioSinImpuesto * VD.Ieps), 2),'C') IEPS, \n" +
+                " FORMAT(ROUND((VD.Precio * Cantidad),2),'C') Total, VD.IdProducto," +
                 " VD.EsCaja, VD.Uom  \n" +
                 " FROM PVVentasDetalle VD " +
                 " LEFT JOIN PVProductos p ON vd.IdProducto = p.Id \n" +

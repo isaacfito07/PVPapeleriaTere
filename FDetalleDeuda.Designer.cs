@@ -195,7 +195,7 @@ namespace PVLaJoya
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "FDetalleDeuda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Historial de abonos";
+            this.Text = "Detalle de la deuda";
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleProducto)).EndInit();
             this.toolStrip1.ResumeLayout(false);

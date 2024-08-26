@@ -60,7 +60,7 @@ namespace PVLaJoya
                     lblSitioTitulo.Text = s.ToString();
             }
 
-            sql.llenaCombo(cbxProveedor, sql.selec(" SELECT Id, Nombre FROM PVProveedores WHERE Activo=1 ORDER BY Nombre  "), "Id", "Nombre");
+            sql.llenaCombo(cbxProveedor, sqlLoc.selec(" SELECT Id, Nombre FROM PVProveedores WHERE Activo=1 ORDER BY Nombre  "), "Id", "Nombre");
 
             lblFecha.Text = DateTime.Now.ToString("dd-MM-yyyy");
             lblHora.Text = DateTime.Now.ToString("HH:mm");
