@@ -354,20 +354,23 @@ namespace PVLaJoya
            + " LEFT JOIN PVProductos P2 ON Pres.IdProductoIndividual = P2.Id \n";
 
             //Nueva version
-            queryProductos = " SELECT DISTINCT P.Id, \n" +
-                " CONCAT(ISNULL(P2.Descripcion,P.Descripcion), ' ', P.Marca, ' ', \n" +
-                " P.Presentacion) Producto, CONCAT(Pres.Presentacion, ' (', Pres.Uom, ')') 'Presentación', \n" +
-                " Pres.CodigoBarras, Pres.Uom, \n" +
-                " ROUND((ISNULL(Pres.Precio, 0)),2) Precio, P.IVA, P.IEPS, P.Foto, \n" +
-                " (CASE WHEN Pres.Uom > 1 THEN 1 ELSE 0 END) EsCaja, ISNULL(Pres.Id, 0) IdPresentacionVenta, \n" +
-                " PVP.General AS PrecioGeneral, PVP.Talleres AS PrecioTalleres, PVP.Distribuidores AS PrecioDistribuidores,\n" +
-                " P.IdMarca, P.IdLinea, (Pres.Precio + ((Pres.Precio * P.Iva) + (Pres.Precio * P.Ieps))) PrecioFinal, Pres.sku, P.Pesaje \n" +
-                " FROM PVProductos P\n" +
-                " LEFT JOIN \n (\n " +
-                "   SELECT DISTINCT(idproducto), Pre.General, Pre.Talleres, Pre.Distribuidores FROM PVPrecios Pre\n" +
-                " ) PVP ON p.Id = PVP.idproducto\n" +
-                " LEFT JOIN PVPresentacionesVentaProd Pres ON Pres.IdProducto = P.Id \n" +
-                " LEFT JOIN PVProductos P2 ON Pres.IdProductoIndividual = P2.Id ";
+            queryProductos = " SELECT DISTINCT P.Id, \n"
+            + " CONCAT(ISNULL(P2.Descripcion,P.Descripcion), ' ', P.Marca, ' ', \n"
+            + " P.Presentacion) Producto, \n"
+            + " CONCAT(Pres.Presentacion, ' (', Pres.Uom, ')') 'Presentación', \n"
+            + " Pres.CodigoBarras, Pres.Uom,\n"
+            + " ROUND((ISNULL(Pres.Precio, 0)),2) Precio, P.IVA, P.IEPS, P.Foto, \n"
+            + " (CASE WHEN Pres.Uom > 1 THEN 1 ELSE 0 END) EsCaja, ISNULL(Pres.Id, 0) IdPresentacionVenta, \n"
+            + " P.IdMarca, P.IdLinea, (Pres.Precio + ((Pres.Precio * P.Iva) + (Pres.Precio * P.Ieps))) PrecioFinal, \n"
+            + " (PVP.General + ((PVP.General * P.Iva) + (PVP.General * P.Ieps))) AS PrecioGeneral, (PVP.Talleres + ((PVP.Talleres * P.Iva) + (PVP.Talleres * P.Ieps))) AS PrecioTalleres,  (PVP.Distribuidores + ((PVP.Distribuidores * P.Iva) + (PVP.Distribuidores * P.Ieps))) AS PrecioDistribuidores, \n"
+            + " ISNULL(PVP.General, 0) AS PrecioGeneralSinIva, ISNULL(PVP.Talleres, 0) AS PrecioTalleresSinIva, ISNULL(PVP.Distribuidores,0) AS PrecioDistribuidoresSinIva, \n"
+            + " Pres.sku, P.Pesaje \n"
+            + " FROM PVProductos P \n"
+            + " LEFT JOIN ( \n"
+            + " SELECT DISTINCT(idproducto), Pre.idSucursal, Pre.IdPresentacionVenta, Pre.General, Pre.Talleres, Pre.Distribuidores FROM PVPrecios Pre WHERE pre.idSucursal = " + idSucursal + " \n"
+            + " ) PVP ON PVP.idproducto = P.Id \n"
+            + " INNER JOIN PVPresentacionesVentaProd Pres ON Pres.IdProducto = P.Id AND Pres.Id = PVP.IdPresentacionVenta \n"
+            + " LEFT JOIN PVProductos P2 ON Pres.IdProductoIndividual = P2.Id \n";
 
             dtProductos = sqlLoc.selec(queryProductos);
         }
@@ -540,9 +543,8 @@ namespace PVLaJoya
                 }
 
             }
-
-
-
+            lblIVA.Text = (0).ToString();
+            lblIEPS.Text = (0).ToString();
         }
         //private void nuevaVenta()
         //{
@@ -835,7 +837,7 @@ namespace PVLaJoya
 
             string NombreCliente = CBCliente.SelectedIndex == -1 ? txtNombreCliente.Text : CBCliente.Text;
 
-            double total = Convert.ToDouble(lblTotal.Text.Trim().Replace("Total:$","")) - (Convert.ToDouble(lblIVA.Text.Trim()) + Convert.ToDouble(lblIEPS.Text.Trim()));
+            double total = Convert.ToDouble(lblTotal.Text.Trim().Replace("Total:$", "")) - (Convert.ToDouble(lblIVA.Text.Trim().Replace("$", "")) + Convert.ToDouble(lblIEPS.Text.Trim().Replace("$", "")));
             FPago pago = new FPago(sqlLoc, sql, total.ToString("C2"), 
                 Convert.ToDouble(lblIVA.Text.Trim()), 
                 Convert.ToDouble(lblIEPS.Text.Trim()), idUsuario, idSucursal, HabilitarCreditoComoFormaPago(ClienteConPosibleCredito), NombreCliente, false, Convert.ToInt32(CBCliente.SelectedValue));
@@ -1002,6 +1004,7 @@ namespace PVLaJoya
             string sku = "";
             string descripcionProducto = "";
             string NumeroTelefonico = "";
+            string PrecioSinImpuestos = string.Empty;
 
             string trans = "";
             string textoTrans = "";
@@ -1019,6 +1022,20 @@ namespace PVLaJoya
             foreach (DataGridViewRow rw in dgvVenta.Rows)
             {
                 IdProducto = rw.Cells[indIdProd].Value.ToString();
+
+                switch (ObtenerTipoCliente())
+                {
+                    case 1:
+                        PrecioSinImpuestos = ((dtProductos.Select("id = " + IdProducto))[0][17]).ToString();
+                        break;
+                    case 2:
+                        PrecioSinImpuestos = ((dtProductos.Select("id = " + IdProducto))[0][18]).ToString();
+                        break;
+                    case 3:
+                        PrecioSinImpuestos = ((dtProductos.Select("id = " + IdProducto))[0][19]).ToString();
+                        break;
+                }
+
                 Precio = double.Parse(rw.Cells[indPrecio].Value.ToString(), NumberStyles.Currency, null).ToString();
                 PrecioInicial = double.Parse(rw.Cells[indPrecioInicial].Value.ToString(), NumberStyles.Currency, null).ToString();
                 Cantidad = rw.Cells[indQty].Value.ToString();
@@ -1060,9 +1077,9 @@ namespace PVLaJoya
                     " " + IVA + ", " + IEPS + ", " +
                     " " + EsCaja + ", " + Uom + ", " +
                     " '" + fechaH + "' ," + idUsuario + ", " +
-                    " " + idPres + ", " + idMarca + ", " + idLinea + ", '"+ NumeroTelefonico + "', "+ montoComision +" ;";
+                    " " + idPres + ", " + idMarca + ", " + idLinea + ", '" + NumeroTelefonico + "', " + montoComision + "," + PrecioSinImpuestos + ";";
 
-               
+
                 //Si el producto es una recarga, realizar la recarga
                 if (sku != "") {
                     //Crear la recarga
@@ -1692,7 +1709,7 @@ namespace PVLaJoya
                         double qty_ = Convert.ToDouble(dgvR.Cells[indQty].Value);
 
                         //cantidad
-                        int qtyFinal = 0;
+                        double qtyFinal = 0;
 
                         if (qty_ > 100)
                         {
@@ -1700,10 +1717,10 @@ namespace PVLaJoya
                             dgvR.Cells[indQty].Value = 100;
                         }
                         else
-                            qtyFinal = Convert.ToInt32(dgvR.Cells[indQty].Value);
+                            qtyFinal = Convert.ToDouble(dgvR.Cells[indQty].Value);
 
                         //total
-                        dgvR.Cells[indTotal].Value = Math.Round(Convert.ToInt32(dgvR.Cells[indQty].Value) * double.Parse(dgvR.Cells[indPrecio].Value.ToString(), NumberStyles.Currency, null), 2).ToString("C2");
+                        dgvR.Cells[indTotal].Value = Math.Round(Convert.ToDouble(dgvR.Cells[indQty].Value) * double.Parse(dgvR.Cells[indPrecio].Value.ToString(), NumberStyles.Currency, null), 2).ToString("C2");
 
                         if (qtyFinal == 0)
                         {
@@ -2151,7 +2168,8 @@ namespace PVLaJoya
                         {
                             datosRecibidos = false;
                         }
-                        serialPort.Write("P");
+                        if (serialPort != null)
+                            serialPort.Write("P");
 
                         // Esperar la recepción de datos
                         DateTime timeout = DateTime.Now.AddSeconds(5);
@@ -2713,7 +2731,7 @@ namespace PVLaJoya
                     //total
                     dgvR.Cells[indTotal].Value = Math.Round(Convert.ToInt32(dgvR.Cells[indQty].Value) * double.Parse(dgvR.Cells[indPrecio].Value.ToString(), NumberStyles.Currency, null), 2).ToString("C2");
 
-                    if (qtyFinal == 0)
+                    if (qtyFinal <= 0)
                     {
                         dgvVenta.Rows.Remove(dgvR);
                     }
@@ -2734,6 +2752,18 @@ namespace PVLaJoya
                         string idMarca = existeP[0]["IdMarca"].ToString();
                         string idLinea = existeP[0]["IdLinea"].ToString();
 
+                        switch (ObtenerTipoCliente())
+                        {
+                            case 1:
+                                PrecioFinal = Convert.ToDouble(existeP[0]["PrecioGeneral"]).ToString("C2");
+                                break;
+                            case 2:
+                                PrecioFinal = Convert.ToDouble(existeP[0]["PrecioTalleres"]).ToString("C2");
+                                break;
+                            case 3:
+                                PrecioFinal = Convert.ToDouble(existeP[0]["PrecioDistribuidores"]).ToString("C2");
+                                break;
+                        }
 
                         lblDescProd.Text = Producto;
                         lblPrecioProd.Text = PrecioFinal;
@@ -2863,6 +2893,19 @@ namespace PVLaJoya
                     string Precio = Convert.ToDouble(existe[0]["Precio"]).ToString("C2");
                     string Imagen = existe[0]["Foto"].ToString();
                     string PrecioFinal = Convert.ToDouble(existe[0]["PrecioFinal"]).ToString("C2");
+
+                    switch (idTipoCliente)
+                    {
+                        case 1:
+                            PrecioFinal = Convert.ToDouble(existe[0]["PrecioGeneral"]).ToString("C2");
+                            break;
+                        case 2:
+                            PrecioFinal = Convert.ToDouble(existe[0]["PrecioTalleres"]).ToString("C2");
+                            break;
+                        case 3:
+                            PrecioFinal = Convert.ToDouble(existe[0]["PrecioDistribuidores"]).ToString("C2");
+                            break;
+                    }
 
                     lblDescProd.Text = Producto;
                     lblPrecioProd.Text = PrecioFinal;
@@ -4191,11 +4234,21 @@ namespace PVLaJoya
             {
                 double iva = 0;
                 double ieps = 0;
-                double subtotal =
-                    (Convert.ToInt32(gvr.Cells[indQty].Value) * 
-                    double.Parse(gvr.Cells[indPrecioInicial].Value.ToString(), NumberStyles.Currency, null));
-                double total =
-                    double.Parse(gvr.Cells[indTotal].Value.ToString(), NumberStyles.Currency, null);
+                double subtotal = 0;
+                double total = 0;
+
+                switch (ObtenerTipoCliente())
+                {
+                    case 1:
+                        total = Convert.ToDouble(((dtProductos.Select("id = " + gvr.Cells[indIdProd].Value.ToString() + " AND EsCaja = " + gvr.Cells[indEsCaja].Value.ToString()))[0][17]));
+                        break;
+                    case 2:
+                        total = Convert.ToDouble(((dtProductos.Select("id = " + gvr.Cells[indIdProd].Value.ToString() + " AND EsCaja = " + gvr.Cells[indEsCaja].Value.ToString()))[0][18]));
+                        break;
+                    case 3:
+                        total = Convert.ToDouble(((dtProductos.Select("id = " + gvr.Cells[indIdProd].Value.ToString() + " AND EsCaja = " + gvr.Cells[indEsCaja].Value.ToString()))[0][19]));
+                        break;
+                }
 
                 if (gvr.Cells[indIVA].Value != null)
                     if (double.TryParse(gvr.Cells[indIVA].Value.ToString(), out iva)) { }
@@ -4203,16 +4256,16 @@ namespace PVLaJoya
                 if (gvr.Cells[indIEPS].Value != null)
                     if (double.TryParse(gvr.Cells[indIEPS].Value.ToString(), out ieps)) { }
 
-                sum += total;
+                sum += double.Parse(gvr.Cells[indTotal].Value.ToString(), NumberStyles.Currency, null);
 
                 if (iva > 0)
                 {
-                    ivaTotal += total * iva;
+                    ivaTotal += ((total * iva) * Convert.ToInt32(gvr.Cells[indQty].Value));
                 }
                 
                 if (ieps > 0)
                 {
-                    iepsTotal += subtotal * ieps;
+                    iepsTotal += ((total * ieps) * Convert.ToInt32(gvr.Cells[indQty].Value));
                 }
             }
 
@@ -4637,7 +4690,7 @@ namespace PVLaJoya
                 FolioVenta = dtFolioVenta.Rows[0]["FolioVenta"].ToString();
             }
 
-            string urlBase = "https://agape.ledsco.com.mx/FacturacionMasiva.aspx";
+            string urlBase = "https://terepapeleria.ledsco.com.mx/FacturacionMasiva.aspx";
             string parametros = "?s=" + idSucursal + "&f=" + FolioTicket + "&fv=" + FechaVenta + "&ff=" + FolioVenta + "&idu=" + idUsuario;
             string url = urlBase + parametros;
 

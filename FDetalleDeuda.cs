@@ -57,10 +57,9 @@ namespace PVLaJoya
                 + "         CASE WHEN EsCaja = 1 THEN CONCAT('C/',VD.Uom ) ELSE 'PZA' END)\n"
                 + "     END\n"
                 + "     Producto,\n"
-                + "     VD.Cantidad as [#], (VD.Precio + (VD.Precio * VD.Iva) + (VD.Precio * VD.Ieps)) Precio,\n"
-                + "     VD.MontoDescuento Descuento, \n"
-                + "     ROUND((VD.Cantidad * (VD.Precio  + (VD.Precio * VD.Iva) + (VD.Precio * VD.Ieps)) \n"
-                + "         - VD.MontoDescuento), 2) Total\n"
+                + "     VD.Cantidad AS [#], (VD.Precio) Precio, \n"
+                + "     VD.MontoDescuento Descuento,  \n"
+                + "     ROUND((VD.Cantidad * (VD.Precio) - VD.MontoDescuento), 2) Total\n"
                 + " FROM PVVentasDetalle VD LEFT JOIN PVProductos P ON VD.IdProducto = P.Id \n"
                 + " LEFT JOIN PVPresentacionesVentaProd PVP ON VD.IdPresentacionProducto = PVP.Id \n"
                 + " WHERE VD.FolioVenta = '" + FolioVentaCombo + "' ";

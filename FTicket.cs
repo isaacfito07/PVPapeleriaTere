@@ -63,7 +63,7 @@ namespace PVLaJoya
 
             string queryInfo = "SELECT V.FolioTicket FolioVenta, C.Nombre Cliente, \n"
                             + " FORMAT(V.FechaVenta, 'dd/MM/yyyy HH:mm:ss tt') FechaVenta, U.Nombres Atendio, \n"
-                            + " S.Nombre Sucursal, VD.Subtotal, VD.IvaIeps, V.TotalVenta Total, \n"
+                            + " S.Nombre Sucursal, (VD.Subtotal - VD.IvaIeps) Subtotal, VD.IvaIeps, V.TotalVenta Total, \n"
                             + " P.MontoRecibido Recibido, P.Cambio, \n"
                             + " .dbo.CantidadConLetraMoneda(V.TotalVenta) MontoLetra, ISNULL(MC.MontoMonedero,0) MontoMonedero\n"
                             + " FROM PVVentas V \n"
@@ -73,8 +73,7 @@ namespace PVLaJoya
                             + " LEFT JOIN PVVentaPago P ON P.FolioVenta = V.FolioVenta \n"
                             + " LEFT JOIN ( \n"
                             + "    SELECT FolioVenta, SUM((Precio - MontoDescuento)* Cantidad) Subtotal, \n"
-                            + "    SUM((((Precio - MontoDescuento) * Cantidad) * iva) \n"
-                            + "        + (((Precio - MontoDescuento) * Cantidad) * ieps)) IvaIeps \n"
+                            + "    SUM(Cantidad * ((PrecioSinImpuesto * Iva) + (PrecioSinImpuesto * Ieps))) AS IvaIeps \n"
                             + "    FROM PVVentasDetalle WHERE FolioVenta = '" + folioVenta + "'\n"
                             + "    GROUP BY FolioVenta \n"
                             + " ) VD ON VD.FolioVenta = V.FolioVenta \n"

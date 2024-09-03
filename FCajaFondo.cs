@@ -14,7 +14,7 @@ namespace PVLaJoya
     {
         ConSQL sql, sqlLoc;
         string nombre, idSucursal, sucursal, idUsuario, numCaja;
-        
+
         public FCajaFondo(ConSQL _sql, ConSQL _sqlLoc, string _nombre, string _idSucursal, string sucursal, string _idUsuario, string _numCaja)
         {
             InitializeComponent();
@@ -31,7 +31,15 @@ namespace PVLaJoya
         {
 
         }
-        private void nudFondo_Click(object sender, EventArgs e)
+
+        private void FCajaFondo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnGuardar_Click(sender, e);
+            }
+        }
+        private void nudFondo_Enter(object sender, EventArgs e)
         {
             nudFondo.Select(0, nudFondo.Text.Length);
         }

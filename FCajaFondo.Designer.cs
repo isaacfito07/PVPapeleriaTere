@@ -142,7 +142,7 @@ namespace PVLaJoya
             this.nudFondo.Size = new System.Drawing.Size(161, 40);
             this.nudFondo.TabIndex = 47;
             this.nudFondo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudFondo.Click += new System.EventHandler(this.nudFondo_Click);
+            this.nudFondo.Enter += new System.EventHandler(this.nudFondo_Enter);
             // 
             // FCajaFondo
             // 
@@ -163,6 +163,7 @@ namespace PVLaJoya
             this.Text = "Fondo de Caja";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fCajaFondo_FormClosing);
             this.Load += new System.EventHandler(this.fCajaFondo_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FCajaFondo_KeyDown);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();

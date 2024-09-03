@@ -111,6 +111,7 @@ namespace PVLaJoya
                 txtDescuento.Enabled = false;
                 NoCambiarDescuento = false;
             }
+            nudEfectivo.Select();
         }
 
         private void fPago_Load(object sender, EventArgs e)
