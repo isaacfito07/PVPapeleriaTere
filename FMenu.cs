@@ -97,7 +97,7 @@ namespace PVLaJoya
 
             //Nueva Version
             queryProductos = " SELECT DISTINCT P.Id, \n"
-          + " CONCAT(ISNULL(P2.Descripcion,P.Descripcion), ' ', P.Marca, ' ', \n"
+          + " CONCAT(ISNULL(P2.Descripcion,P.Descripcion), ' ', \n"
           + " P.Presentacion) Producto, \n"
           + " CONCAT(Pres.Presentacion, ' (', Pres.Uom, ')') 'Presentación', \n"
           + " Pres.CodigoBarras, Pres.Uom,\n"

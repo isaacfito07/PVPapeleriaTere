@@ -83,7 +83,7 @@ namespace PVLaJoya
 
             //Nueva version
             query = "SELECT \n"
-                           + "     DISTINCT P.Id, CONCAT(ISNULL(P2.Descripcion, P.Descripcion), ' ', P.Marca, ' ', P.Presentacion) Producto,  \n"
+                           + "     DISTINCT P.Id, CONCAT(ISNULL(P2.Descripcion, P.Descripcion), ' '/*, P.Marca, ' '*/, P.Presentacion) Producto,  \n"
                            + "     CONCAT(Pres.Presentacion, ' (', Pres.Uom, ')') 'Presentación',  Pres.CodigoBarras, Pres.Uom, \n"
                            + "     PVP.Precio, \n"
                            + "P.Foto, Pres.Id IdPresentacionVenta, P.IdMarca, P.IdLinea, \n"
@@ -429,10 +429,10 @@ namespace PVLaJoya
                 sqlLoc.exec(" TRUNCATE TABLE PVProveedores ");
                 cuantos += sqlLoc.copiaBulto(dtCopiar, "PVProveedores");
 
-                if (cuantos > 0)
+                /*if (cuantos > 0)
                 {
                     MessageBox.Show("Catalogos descargados con exito!", "Descarga", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                }*/
 
                 if (cuantos > 0)
                 {
