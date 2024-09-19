@@ -320,6 +320,12 @@
     <Compile Include="FImprimeRetiro.Designer.cs">
       <DependentUpon>FImprimeRetiro.cs</DependentUpon>
     </Compile>
+    <Compile Include="FPesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPesa.Designer.cs">
+      <DependentUpon>FPesa.cs</DependentUpon>
+    </Compile>
     <Compile Include="FLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -528,6 +534,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FImprimeRetiro.resx">
       <DependentUpon>FImprimeRetiro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPesa.resx">
+      <DependentUpon>FPesa.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FLogin.resx">
       <DependentUpon>FLogin.cs</DependentUpon>
